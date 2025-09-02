@@ -263,22 +263,22 @@ def itinerary_agent(state: TripState) -> TripState:
 
 def build_graph():
     g = StateGraph(TripState)
-    g.add_node("research", research_agent)
-    g.add_node("budget", budget_agent)
-    g.add_node("local", local_agent)
-    g.add_node("itinerary", itinerary_agent)
+    g.add_node("research_agent", research_agent)
+    g.add_node("budget_agent", budget_agent)
+    g.add_node("local_agent", local_agent)
+    g.add_node("itinerary_agent", itinerary_agent)
 
     # Run research, budget, and local agents in parallel
-    g.add_edge(START, "research")
-    g.add_edge(START, "budget")
-    g.add_edge(START, "local")
+    g.add_edge(START, "research_agent")
+    g.add_edge(START, "budget_agent")
+    g.add_edge(START, "local_agent")
     
     # All three agents feed into the itinerary agent
-    g.add_edge("research", "itinerary")
-    g.add_edge("budget", "itinerary")
-    g.add_edge("local", "itinerary")
+    g.add_edge("research_agent", "itinerary_agent")
+    g.add_edge("budget_agent", "itinerary_agent")
+    g.add_edge("local_agent", "itinerary_agent")
     
-    g.add_edge("itinerary", END)
+    g.add_edge("itinerary_agent", END)
 
     # Compile without checkpointer to avoid state persistence issues
     return g.compile()
